@@ -15,7 +15,7 @@ export class AuthService {
 
   login(userName: string, password: string): Promise<AuthResponse | undefined> {
     return new Promise<AuthResponse | undefined>((resolve, reject) => {
-      this.http.post<AuthResponse>(environment.loginApiUrl, JSON.stringify({ username: userName, password: password, expiresInMins: 30 })).toPromise().then((response: AuthResponse | undefined) => {
+      this.http.post<AuthResponse>(environment.baseURL + environment.loginApiUrl, { username: userName, password: password }).toPromise().then((response: AuthResponse | undefined) => {
         resolve(response);
       }, error => {
         reject(error);
@@ -38,12 +38,12 @@ export interface LoginCredentials {
 }
 
 export interface AuthResponse {
-  id: number;
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  image: string;
+  userId: 0,
+  organizationId: 1,
+  userName: string,
+  passwordHash: string,
+  fullName: string,
+  email: string,
+  createdOn: string
   token: string;
 }
